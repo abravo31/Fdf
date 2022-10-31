@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/27 20:21:55 by abravo            #+#    #+#             */
-/*   Updated: 2022/10/31 21:42:24 by abravo           ###   ########.fr       */
+/*   Created: 2022/06/01 17:34:17 by abravo            #+#    #+#             */
+/*   Updated: 2022/06/01 18:48:39 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "ft_printf.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include "../minilibx-linux/mlx.h"
-# include "../minilibx-linux/mlx_int.h"
-
-typedef struct s_data
+int	ft_putnbr(int n)
 {
-    void	*mlx;
-	void	*mlx_win;
-	void	*img;
-	char	*addr;
-	int	bits_per_pixel;
-	int	line_length;
-	int endian;
-    int prev_x;
-    int prev_y;
-}	t_data;
+	int	len;
 
-int check_file(const char *filename);
-
-#endif
+	len = 0;
+	if (n == -2147483648)
+	{
+		write(1, "-2147483648", 11);
+		return (11);
+	}
+	if (n < 0)
+	{
+		n = -n;
+		len += ft_putchar('-');
+	}
+	if (n > 9)
+		len += ft_putnbr(n / 10);
+	len += ft_putchar((n % 10) + '0');
+	return (len);
+}

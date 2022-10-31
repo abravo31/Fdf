@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/27 20:21:55 by abravo            #+#    #+#             */
-/*   Updated: 2022/10/31 21:42:24 by abravo           ###   ########.fr       */
+/*   Created: 2022/05/06 15:41:29 by abravo            #+#    #+#             */
+/*   Updated: 2022/05/30 13:32:12 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include "../minilibx-linux/mlx.h"
-# include "../minilibx-linux/mlx_int.h"
-
-typedef struct s_data
+size_t	ft_strlen(const char *s)
 {
-    void	*mlx;
-	void	*mlx_win;
-	void	*img;
-	char	*addr;
-	int	bits_per_pixel;
-	int	line_length;
-	int endian;
-    int prev_x;
-    int prev_y;
-}	t_data;
+	size_t	i;
 
-int check_file(const char *filename);
+	if (!s)
+		return (0);
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
 
-#endif
+/*int main (void)
+{
+	printf("%ld\n", ft_strlen("My\tStr"));
+	printf("%ld\n", strlen("My\tStr"));
+}*/

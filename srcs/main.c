@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:41:25 by abravo            #+#    #+#             */
-/*   Updated: 2022/10/28 19:49:55 by abravo           ###   ########.fr       */
+/*   Updated: 2022/10/31 21:41:56 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,10 @@ int	mouse_hook(int button, int x, int y, t_data *img)
 	return (0);
 }
 
-int	main()
+int	main(int ac, char **av)
 {
+	if(ac != 2 || check_file(av[1]))
+		return (1);
 	t_data	img;
 	
 	img.prev_x = 0;

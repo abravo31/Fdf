@@ -1,38 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_print_base.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/27 20:21:55 by abravo            #+#    #+#             */
-/*   Updated: 2022/10/31 21:42:24 by abravo           ###   ########.fr       */
+/*   Created: 2022/06/01 18:01:27 by abravo            #+#    #+#             */
+/*   Updated: 2022/06/01 18:59:23 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "ft_printf.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include "../minilibx-linux/mlx.h"
-# include "../minilibx-linux/mlx_int.h"
-
-typedef struct s_data
+int	ft_print_base(unsigned int n, const char *str, int base)
 {
-    void	*mlx;
-	void	*mlx_win;
-	void	*img;
-	char	*addr;
-	int	bits_per_pixel;
-	int	line_length;
-	int endian;
-    int prev_x;
-    int prev_y;
-}	t_data;
+	int	len;
 
-int check_file(const char *filename);
-
-#endif
+	len = 0;
+	if (n >= (unsigned int) base)
+		len += ft_print_base(n / base, str, base);
+	len += ft_putchar(str[n % base]);
+	return (len);
+}

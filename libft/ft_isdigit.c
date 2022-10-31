@@ -1,38 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/27 20:21:55 by abravo            #+#    #+#             */
-/*   Updated: 2022/10/31 21:42:24 by abravo           ###   ########.fr       */
+/*   Created: 2022/05/04 19:13:26 by abravo            #+#    #+#             */
+/*   Updated: 2022/05/13 16:51:49 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include "../minilibx-linux/mlx.h"
-# include "../minilibx-linux/mlx_int.h"
-
-typedef struct s_data
+int	ft_isdigit(int c)
 {
-    void	*mlx;
-	void	*mlx_win;
-	void	*img;
-	char	*addr;
-	int	bits_per_pixel;
-	int	line_length;
-	int endian;
-    int prev_x;
-    int prev_y;
-}	t_data;
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
 
-int check_file(const char *filename);
+/*#include <stdio.h>
 
-#endif
+int main(void)
+{
+	printf("%d\n", ft_isdigit ('-'));
+	return 0;
+}*/

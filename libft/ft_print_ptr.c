@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_print_ptr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/27 20:21:55 by abravo            #+#    #+#             */
-/*   Updated: 2022/10/31 21:42:24 by abravo           ###   ########.fr       */
+/*   Created: 2022/05/31 17:33:17 by abravo            #+#    #+#             */
+/*   Updated: 2022/06/01 18:56:09 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "ft_printf.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include "../minilibx-linux/mlx.h"
-# include "../minilibx-linux/mlx_int.h"
-
-typedef struct s_data
+static int	ft_putptr(unsigned long int n, const char *ptr)
 {
-    void	*mlx;
-	void	*mlx_win;
-	void	*img;
-	char	*addr;
-	int	bits_per_pixel;
-	int	line_length;
-	int endian;
-    int prev_x;
-    int prev_y;
-}	t_data;
+	int		len;
 
-int check_file(const char *filename);
+	len = 0;
+	if (n >= 16)
+	{
+		len += ft_putptr(n / 16, ptr);
+	}
+	len += ft_putchar(ptr[n % 16]);
+	return (len);
+}
 
-#endif
+int	ft_print_ptr(unsigned long int n, const char *ptr)
+{
+	int	len;
+
+	if (!n)
+		return (ft_putstr(PTR_NULL));
+	len = 0;
+	len += ft_putstr("0x");
+	len += ft_putptr(n, ptr);
+	return (len);
+}

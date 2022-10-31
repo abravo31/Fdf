@@ -1,38 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/27 20:21:55 by abravo            #+#    #+#             */
-/*   Updated: 2022/10/31 21:42:24 by abravo           ###   ########.fr       */
+/*   Created: 2022/05/17 14:56:37 by abravo            #+#    #+#             */
+/*   Updated: 2022/05/23 11:25:17 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include "../minilibx-linux/mlx.h"
-# include "../minilibx-linux/mlx_int.h"
-
-typedef struct s_data
+char	*ft_strdup(const char *s)
 {
-    void	*mlx;
-	void	*mlx_win;
-	void	*img;
-	char	*addr;
-	int	bits_per_pixel;
-	int	line_length;
-	int endian;
-    int prev_x;
-    int prev_y;
-}	t_data;
+	char	*s1;
+	size_t	size;
+	size_t	i;
 
-int check_file(const char *filename);
+	if (!s)
+		return (0);
+	i = 0;
+	size = ft_strlen(s);
+	s1 = malloc(sizeof(char) * size + 1);
+	if (!s1)
+		return (0);
+	while (s[i])
+	{
+		s1[i] = s[i];
+		i++;
+	}
+	s1[i] = '\0';
+	return (s1);
+}
 
-#endif
+/*int main ()
+{
+	unsigned int i;
+	printf("%s\n", ft_strdup("0"));
+	//printf("%u\n", i);
+	//printf("%d\n", -328 % 10);
+	return (0);
+}*/

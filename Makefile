@@ -1,7 +1,11 @@
 MLX_LINUX_PATH	=	./minilibx-linux
 MLX_LINUX		=	$(MLX_LINUX_PATH)/libmlx.a
 
-SOURCES_FILES	=	main.c
+LIBFT_PATH		=	./libft
+LIBFT			=	$(LIBFT_PATH)/libft.a
+
+SOURCES_FILES	=	main.c \
+					check_file.c
 
 SOURCES_DIR		=	srcs
 
@@ -22,27 +26,34 @@ CFLAGS			=	-g3 -Wall -Wextra -Werror -D BUFFER_SIZE=100
 MLX_LINUX_FLAGS	=	-L. -lXext -L. -lX11 -lm -lbsd
 
 .c.o:		
-	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+	@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 all:	$(NAME)
 
-$(NAME):	$(MLX_LINUX) $(OBJECTS) $(HEADER)
-	$(CC) $(CFLAGS) $(OBJECTS) $(HEADER) $(MLX_LINUX) $(MLX_LINUX_FLAGS) -o $(NAME)
+$(NAME):	$(MLX_LINUX) $(OBJECTS) $(HEADER) $(LIBFT)
+	@$(CC) $(CFLAGS) $(OBJECTS) $(HEADER) $(LIBFT) $(MLX_LINUX) $(MLX_LINUX_FLAGS) -o $(NAME)
 	@echo "\033[32m$ ${NAME} compiled !"
 	@echo "----------------------------\033[0m"
 
 $(MLX_LINUX):
-	$(MAKE) -C $(MLX_LINUX_PATH)
+	@$(MAKE) -C $(MLX_LINUX_PATH)
 	@echo "\033[32m$ minilibx compiled !"
 	@echo "----------------------------\033[0m"
 
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_PATH)
+	@echo "\033[32m$ libft compiled !"
+	@echo "----------------------------\033[0m"
+
 clean:
-	$(MAKE) -C $(MLX_LINUX_PATH) clean
-	$(RM) $(OBJECTS)
+	@$(MAKE) -C $(MLX_LINUX_PATH) clean
+	@$(MAKE) -C $(LIBFT_PATH) clean
+	@$(RM) $(OBJECTS)
 	@echo "\033[32mClean !\033[0m"
 
 fclean:		clean
-	$(RM) $(NAME)
+	@$(MAKE) -C $(LIBFT_PATH) fclean
+	@$(RM) $(NAME)
 
 re:			fclean all
 
