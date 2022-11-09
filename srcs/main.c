@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:41:25 by abravo            #+#    #+#             */
-/*   Updated: 2022/10/31 21:41:56 by abravo           ###   ########.fr       */
+/*   Updated: 2022/11/09 19:54:54 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,13 @@ int	main(int ac, char **av)
 {
 	if(ac != 2 || check_file(av[1]))
 		return (1);
+	fill_matrix(av[1]);
 	t_data	img;
 	
 	img.prev_x = 0;
 	img.prev_y = 0;
 	img.mlx = mlx_init();
-	img.mlx_win = mlx_new_window(img.mlx, 1920, 1080, "Hello word!");
+	img.mlx_win = mlx_new_window(img.mlx, 1920, 1080, "fdf");
 	img.img = mlx_new_image(img.mlx, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	//draw_line_yo(img, 10, 10, 100, 100);

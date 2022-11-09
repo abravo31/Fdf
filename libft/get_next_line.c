@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 14:45:26 by abravo            #+#    #+#             */
-/*   Updated: 2022/10/31 23:08:06 by abravo           ###   ########.fr       */
+/*   Updated: 2022/11/07 17:51:54 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,47 +111,3 @@ char	*get_next_line(int fd)
 	free (store);
 	return (line);
 }
-
-/*int	main()
-{
-	int		fd;
-	char	*line;
-
-	fd = open("test", O_RDONLY);
-	line = get_next_line(fd);
-	printf("-%s", line);
-	free (line);
-	// line = get_next_line(fd);
-	// printf("-%s", line);
-	// free (line);
-	// line = get_next_line(fd);
-	// printf("-%s", line);
-	// free (line);
-	// line = get_next_line(fd);
-	// printf("-%s", line);
-	// free (line);
-	// line = get_next_line(fd);
-	// printf("-%s", line);
-	// free (line);
-	// line = get_next_line(fd);
-	// printf("-%s", line);
-	// free (line);
-	// line = get_next_line(fd);
-	// printf("-%s", line);
-	// free (line);
-	// line = get_next_line(fd);
-	// printf("-%s", line);
-	// free (line);
-	// free (line);
-	// line = get_next_line(fd);
-	// printf("%s", line);
-	//while (line)
-	//{
-	//	printf("%s", line);
-	//	free (line);
-	//	line = get_next_line (fd);
-	//}
-
-	close (fd);
-	return (0);
-}*/

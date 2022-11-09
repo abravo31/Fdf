@@ -5,7 +5,7 @@ LIBFT_PATH		=	./libft
 LIBFT			=	$(LIBFT_PATH)/libft.a
 
 SOURCES_FILES	=	main.c \
-					check_file.c
+					check_file.c read_map.c
 
 SOURCES_DIR		=	srcs
 

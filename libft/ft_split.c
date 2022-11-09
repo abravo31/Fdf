@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:46:13 by abravo            #+#    #+#             */
-/*   Updated: 2022/05/30 13:03:28 by abravo           ###   ########.fr       */
+/*   Updated: 2022/11/09 19:16:53 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,3 @@ char	**ft_split(char const *s, char c)
 	tab = ft_tabline(s, c, tab);
 	return (tab);
 }
-
-/*int main()
-{
-	char **tab =  ft_split("chinimala", ' ');
-
-	while (*tab)
-	{
-		printf("%s\n", *tab);
-		tab++;
-	}
-	return (0);
-}*/

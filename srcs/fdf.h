@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 20:21:55 by abravo            #+#    #+#             */
-/*   Updated: 2022/10/31 21:42:24 by abravo           ###   ########.fr       */
+/*   Updated: 2022/11/09 18:55:25 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include "../minilibx-linux/mlx.h"
 # include "../minilibx-linux/mlx_int.h"
+# include "../libft/libft.h"
 
 typedef struct s_data
 {
@@ -34,5 +35,6 @@ typedef struct s_data
 }	t_data;
 
 int check_file(const char *filename);
+int    **fill_matrix(const char *map);
 
 #endif

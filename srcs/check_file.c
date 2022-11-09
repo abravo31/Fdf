@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 20:20:05 by abravo            #+#    #+#             */
-/*   Updated: 2022/10/31 21:56:20 by abravo           ###   ########.fr       */
+/*   Updated: 2022/11/07 18:09:02 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int check_file_name (const char *filename)
     else
         return (1);
 }
+
 int check_file(const char *filename)
 {   
     int file;

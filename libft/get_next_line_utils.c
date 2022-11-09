@@ -6,13 +6,13 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 14:46:10 by abravo            #+#    #+#             */
-/*   Updated: 2022/10/31 23:07:55 by abravo           ###   ########.fr       */
+/*   Updated: 2022/11/09 19:23:38 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+/*size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	while (s[i])
 		i++;
 	return (i);
-}
+}*/
 
 char	*ft_strchr(const char *s, int c)
 {
