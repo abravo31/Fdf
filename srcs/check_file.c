@@ -6,22 +6,22 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 20:20:05 by abravo            #+#    #+#             */
-/*   Updated: 2022/11/07 18:09:02 by abravo           ###   ########.fr       */
+/*   Updated: 2022/11/10 22:36:28 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./fdf.h"
 
-int check_file_name (const char *filename)
+int check_file_name(const char *filename)
 {
     int i;
     int j;
-    char *type;
+    char    *type;
 
     i = 0;
     j = 0;
     type = ".fdf";
-    if(filename[i] == '.')
+    if (filename[i] == '.')
         return(1);
     while (filename[i] != '.')
         i++;

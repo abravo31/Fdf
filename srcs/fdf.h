@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 20:21:55 by abravo            #+#    #+#             */
-/*   Updated: 2022/11/09 18:55:25 by abravo           ###   ########.fr       */
+/*   Updated: 2022/11/13 20:31:20 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,20 @@ typedef struct s_data
 	int	bits_per_pixel;
 	int	line_length;
 	int endian;
-    int prev_x;
-    int prev_y;
 }	t_data;
+
+typedef struct		s_vector
+{
+	double		x;
+	double		y;
+	double		z;
+	//int			color;
+}					t_vector;
 
 int check_file(const char *filename);
 int    **fill_matrix(const char *map);
+int count_bites(const char *map);
+int count_lines(const char *map);
+void draw_bites_map(int size_x, int size_y);
 
 #endif

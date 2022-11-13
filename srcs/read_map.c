@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 18:09:54 by abravo            #+#    #+#             */
-/*   Updated: 2022/11/09 19:53:11 by abravo           ###   ########.fr       */
+/*   Updated: 2022/11/12 23:07:45 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int   **fill_matrix(const char *map)
    int  **matrix;
    int  x;
    int  y;
+   int  i;
 
     x = count_bites(map);
     y = count_lines(map);
