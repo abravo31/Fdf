@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 18:09:54 by abravo            #+#    #+#             */
-/*   Updated: 2022/11/12 23:07:45 by abravo           ###   ########.fr       */
+/*   Updated: 2022/11/21 22:38:24 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int count_lines(const char *map)
     return (lines);
 }
 
-int	**fill_line(const char *map, int size, int **matrix)
+t_pts	**fill_line(const char *map, int size, t_pts **matrix)
 {
 	char    *line;
     char    **tab;
@@ -65,7 +65,9 @@ int	**fill_line(const char *map, int size, int **matrix)
         tab = ft_split(line, ' ');
         while(x < size)
         {
-            matrix[y][x] = ft_atoi(tab[x]);
+            matrix[y][x].z = ft_atoi(tab[x]);
+            matrix[y][x].x = x;
+            matrix[y][x].y = y;
             x++;
         }
         line = get_next_line(fd);
@@ -76,9 +78,9 @@ int	**fill_line(const char *map, int size, int **matrix)
 	return (matrix);
 }
 
-int   **fill_matrix(const char *map)
+t_pts   **fill_matrix(const char *map)
 {
-   int  **matrix;
+   t_pts  **matrix;
    int  x;
    int  y;
    int  i;
@@ -86,9 +88,9 @@ int   **fill_matrix(const char *map)
     x = count_bites(map);
     y = count_lines(map);
     i = 0;
-    matrix = (int **)malloc(sizeof(int *) * (y + 1) );
+    matrix = (t_pts **)malloc(sizeof(t_pts *) * (y + 1) );
     while (i < y)
-        matrix[i++] = malloc(sizeof(int) * x);
+        matrix[i++] = (t_pts *)malloc(sizeof(t_pts) * x);
     if (!matrix)
         return(NULL);
     matrix = fill_line(map, x, matrix);
