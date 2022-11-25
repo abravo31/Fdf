@@ -6,46 +6,52 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:41:25 by abravo            #+#    #+#             */
-/*   Updated: 2022/11/21 22:55:45 by abravo           ###   ########.fr       */
+/*   Updated: 2022/11/25 18:17:17 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./fdf.h"
 
-void	set_data(t_data *img)
+void	init_center(t_data *data)
 {
-	img->scale = 50;
-	img->z_scale = 10;
+	data->center->x = data->size_x / 2;
+	data->center->y = data->size_y / 2;
+	data->center->z = 0;
+}
+
+void	set_data(t_data *data, char *file)
+{
+	data->scale = 50;
+	data->z_scale = 20;
 	//img->is_isometric = 1;
-	img->angle = 0.523599;
-	img->win_x = 1920;
-	img->win_y = 1080;
-	img->mid_x = img->win_x / 2;
-	img->mid_y = img->win_y / 2;
-	img->mlx = mlx_init();
-	img->img = mlx_new_image(img->mlx, 1920, 1080);
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
-	img->mlx_win = mlx_new_window(img->mlx, img->win_x, img->win_y, "FDF");
+	data->angle = 0.523599;
+	data->win_x = 1920;
+	data->win_y = 1080;
+	data->mid_x = data->win_x / 2;
+	data->mid_y = data->win_y / 2;
+	data->size_x = count_bites(file);
+	data->size_y = count_lines(file);
+	//printf("%d, %d\n", data->size_x, data->size_y);
+	//data->center = malloc(sizeof(t_pts));
+	//printf("test\n");
+	//protect malloc;
+	//init_center(data);
+	data->mlx = mlx_init();
+	data->img = mlx_new_image(data->mlx, 1920, 1080);
+	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length, &data->endian);
+	data->mlx_win = mlx_new_window(data->mlx, data->win_x, data->win_y, "FDF");
 }
 
 int	main(int ac, char **av)
 {
-	t_data	img;
-	int	size_x;
-	int size_y;
+	t_data	*data;
 	
 	if(ac != 2 || check_file(av[1]))
 		return (1);
-	img.matrix = fill_matrix(av[1]);
-	set_data(&img);
-	size_x = count_bites(av[1]);
-	size_y = count_lines(av[1]);
-	draw_bites_map(size_x, size_y, &img);
-	
-	//draw_line_yo(img, 10, 10, 100, 100);
-	/*mlx_put_image_to_window(mlx, mlx_win, img.img, 10, 20);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 20, 10);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 20, 20);*/
-
-	//mlx_destroy_image(mlx, img);
+	data = malloc(sizeof (t_data));
+	set_data(data, av[1]);
+	data->matrix = fill_matrix(av[1]);
+	printf("test2\n");
+	draw_bites_map(data);
+	return (0);
 }
