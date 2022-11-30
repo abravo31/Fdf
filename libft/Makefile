@@ -10,7 +10,7 @@ ft_memcpy.c ft_strchr.c ft_strncmp.c ft_isalpha.c ft_memmove.c \
 ft_strdup.c ft_strnstr.c ft_isascii.c ft_memset.c ft_striteri.c \
 ft_strrchr.c ft_isdigit.c ft_putchar_fd.c ft_strjoin.c ft_strtrim.c \
 ft_write.c ft_putnbr.c ft_printf.c ft_print_ptr.c ft_print_base.c\
-get_next_line.c get_next_line_utils.c
+get_next_line_amanda.c
 
 OBJDIR = objs/
 

@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 20:21:55 by abravo            #+#    #+#             */
-/*   Updated: 2022/11/24 22:07:07 by abravo           ###   ########.fr       */
+/*   Updated: 2022/11/30 22:04:35 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "../minilibx-linux/mlx_int.h"
 # include "../libft/libft.h"
 # include <math.h>
+# include <sys/time.h>
 
 typedef struct s_pts
 {
@@ -31,31 +32,39 @@ typedef struct s_pts
 
 typedef struct s_data
 {
-    void	*mlx;
+	void	*mlx;
 	void	*mlx_win;
 	void	*img;
 	char	*addr;
-	int		bits_per_pixel;
+	int		bpp;
 	int		line_length;
-	int 	endian;
-	int 	scale;
-	int		z_scale;
-	int		win_x;
-	int		win_y;
+	int		endian;
+	double	scale;
+	double	z_scale;
+	float	z_max;
+	float	z_min;
+	double	win_x;
+	double	win_y;
 	int		mid_x;
 	int		mid_y;
-	int	size_x;
-	int	size_y;
+	double	size_x;
+	double	size_y;
 	double	angle;
 	t_pts	*center;
 	t_pts	**matrix;
 }			t_data;
 
+int		check_file(const char *filename);
+t_pts	**fill_matrix(const char *map, t_data *data);
+//int		count_bytes(const char *map);
+void		count_lines(const char *map, t_data *data);
+void	set_img(t_data *data);
+void	draw_map(t_data *data);
+void	ft_free_tab(void **tab);
+long int	ft_time(long int begin_time);
+char	*get_next_line(int fd);
 
-int check_file(const char *filename);
-t_pts    **fill_matrix(const char *map);
-int count_bites(const char *map);
-int count_lines(const char *map);
-void draw_bites_map(t_data *data);
+void	min_z(t_data *data);
+void	max_z(t_data *data);
 
 #endif

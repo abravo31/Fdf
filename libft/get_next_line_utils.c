@@ -6,23 +6,11 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 14:46:10 by abravo            #+#    #+#             */
-/*   Updated: 2022/11/09 19:23:38 by abravo           ###   ########.fr       */
+/*   Updated: 2022/11/28 16:16:34 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-/*size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}*/
 
 char	*ft_strchr(const char *s, int c)
 {
