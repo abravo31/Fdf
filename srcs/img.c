@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 17:11:12 by abravo            #+#    #+#             */
-/*   Updated: 2022/11/30 22:25:20 by abravo           ###   ########.fr       */
+/*   Updated: 2022/12/06 20:18:20 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	set_img(t_data *data)
 		x = -1;
 		while (++x < data->size_x)
 		{
-			get_color(data, data->matrix[y][x].z)
+			data->matrix[y][x].color = default_color(data, data->matrix[y][x].z);
 			zoom(data, x, y);
 			isometric(data, &data->matrix[y][x]);
 			data->matrix[y][x].x += data->mid_x;

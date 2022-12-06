@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 20:21:55 by abravo            #+#    #+#             */
-/*   Updated: 2022/11/30 22:04:35 by abravo           ###   ########.fr       */
+/*   Updated: 2022/12/06 20:14:23 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "../minilibx-linux/mlx.h"
 # include "../minilibx-linux/mlx_int.h"
 # include "../libft/libft.h"
+# include "color.h"
 # include <math.h>
 # include <sys/time.h>
 
@@ -28,6 +29,7 @@ typedef struct s_pts
 	double	x;
 	double	y;
 	double	z;
+	int		color;
 }			t_pts;
 
 typedef struct s_data
@@ -59,11 +61,14 @@ t_pts	**fill_matrix(const char *map, t_data *data);
 //int		count_bytes(const char *map);
 void		count_lines(const char *map, t_data *data);
 void	set_img(t_data *data);
+double	step_color(t_pts from, t_pts to, t_pts *current);
+int	default_color(t_data *data, int z);
 void	draw_map(t_data *data);
 void	ft_free_tab(void **tab);
 long int	ft_time(long int begin_time);
 char	*get_next_line(int fd);
 
+float	ft_abs(int i);
 void	min_z(t_data *data);
 void	max_z(t_data *data);
 

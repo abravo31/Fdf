@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 18:09:54 by abravo            #+#    #+#             */
-/*   Updated: 2022/11/30 22:23:35 by abravo           ###   ########.fr       */
+/*   Updated: 2022/12/06 23:12:03 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,15 @@ void	fill_matrix_line(t_pts **matrix, char **tab, int y, int size)
 	}
 }
 
-t_pts	**fill_line(const char *map, int size, t_pts **matrix)
+t_pts	**fill_line(const char *map, int size, t_pts **matrix, int y)
 {
 	char	*line;
 	char	**tab;
-	int		y;
 	int		fd;
 
 	fd = open(map, O_RDONLY);
-	y = 0;
 	line = get_next_line(fd);
+
 	while (line)
 	{
 		tab = ft_split(line, ' ');
@@ -109,13 +108,12 @@ t_pts	**fill_line(const char *map, int size, t_pts **matrix)
 			return (NULL);
 		}
 		free(line);
-		fill_matrix_line(matrix, tab, y, size);
+		fill_matrix_line(matrix, tab, y, size);		
 		line = get_next_line(fd);
 		ft_free_tab((void **)tab);
 		y++;
 	}
 	close(fd);
-	free(line);
 	matrix[y] = NULL;
 	return (matrix);
 }
@@ -127,11 +125,15 @@ t_pts	**fill_matrix(const char *map, t_data *data)
 	
 	i = 0;
 	matrix = (t_pts **)malloc(sizeof(t_pts *) * (data->size_y + 1));
+	if (!matrix)
+	{
+		//exit and free all
+		return (NULL);
+	}
 	while (i < data->size_y)
 		matrix[i++] = (t_pts *)malloc(sizeof(t_pts) * data->size_x);
-	if (!matrix)
-		return (NULL);
-	matrix = fill_line(map, data->size_x, matrix);
+		//proteger et free, sortir propement
+	matrix = fill_line(map, data->size_x, matrix, 0);
 	if (!matrix)
 	{
 		printf("Comment tu vas sortir\n");

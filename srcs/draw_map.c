@@ -6,31 +6,25 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 22:29:00 by abravo            #+#    #+#             */
-/*   Updated: 2022/11/30 22:23:24 by abravo           ###   ########.fr       */
+/*   Updated: 2022/12/06 22:55:05 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./fdf.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_data *data, t_pts *cur, t_pts from, t_pts to)
 {
 	int	dst;
+	int	color;
 
-	if (x >= 0 && x <= 1920 && y >= 0 && y <= 1080)
+	if (cur->x >= 0 && cur->x <= 1920 && cur->y >= 0 && cur->y <= 1080)
 	{
-		dst = (y * data->line_length) + (x * (data->bpp / 8));
+		dst = ((int)cur->y * data->line_length) + ((int)cur->x * (data->bpp / 8));
+		color = step_color(from, to, cur);
 		data->addr[dst] = color;
 		data->addr[++dst] = color >> 8;
 		data->addr[++dst] = color >> 16;
-		//*(unsigned int *)dst = color;
 	}
-}
-
-float	ft_abs(int i)
-{
-	if (i < 0)
-		return (-i);
-	return (i);
 }
 
 float	ft_step(float dx, float dy)
@@ -45,50 +39,33 @@ float	ft_step(float dx, float dy)
 	return (step);
 }
 
-// void	draw_line(t_data *data, t_pts from, t_pts to)
-// {
-// 	float	step_x;
-// 	float	step_y;
-// 	float	step;
-// 	int		i;
-// 	int		color;
-
-// 	step_x = to.x - from.x;
-// 	step_y = to.y - from.y;
-// 	step = ft_step(step_x, step_y);
-// 	step_x /= step;
-// 	step_y /= step;
-// 	i = 1;
-// 	color = 0x00FF0000;
-// 	while (i <= step)
-// 	{
-// 		my_mlx_pixel_put(data, from.x, from.y, color);
-// 		from.x += step_x;
-// 		from.y += step_y;
-// 		i++;
-// 	}
-// }
-
-void	draw_line(t_data *data, t_pts from, t_pts to)
+Bool	draw_line(t_data *data, t_pts from, t_pts to)
 {
 	float	step_x;
 	float	step_y;
 	float	step;
+	t_pts	*cur;
 	int		i;
 
+	cur = malloc(sizeof (t_pts));
+	if (!cur)
+		return (False);
 	step_x = to.x - from.x;
 	step_y = to.y - from.y;
 	step = ft_step(step_x, step_y);
 	step_x /= step;
 	step_y /= step;
-	i = 1;
-	while (i <= step)
+	cur->x = from.x;
+	cur->y = from.y;
+	i = 0;
+	while (++i <= step)
 	{
-		my_mlx_pixel_put(data, from.x, from.y, get_color(pt, from, to));
-		from.x += step_x;
-		from.y += step_y;
-		i++;
+		my_mlx_pixel_put(data, cur, from, to);
+		cur->x += step_x;
+		cur->y += step_y;
 	}
+	free(cur);
+	return (True);
 }
 
 void	draw_map(t_data *data)
@@ -109,7 +86,9 @@ void	draw_map(t_data *data)
 		while (x < data->size_x)
 		{
 			if (x + 1 != data->size_x)
-				draw_line(data, data->matrix[y][x], data->matrix[y][x + 1]);
+				if (!draw_line(data, data->matrix[y][x], data->matrix[y][x + 1]))
+					exit(1);
+				// si NULL, tout free et tout exit
 			if (y + 1 != data->size_y)
 				draw_line(data, data->matrix[y][x], data->matrix[y + 1][x]);
 			x++;

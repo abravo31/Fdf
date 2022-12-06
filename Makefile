@@ -5,7 +5,7 @@ LIBFT_PATH		=	./libft
 LIBFT			=	$(LIBFT_PATH)/libft.a
 
 SOURCES_FILES	=	main.c \
-					check_file.c read_map.c draw_map.c img.c
+					check_file.c read_map.c draw_map.c img.c utils.c color.c
 
 SOURCES_DIR		=	srcs
 
@@ -22,7 +22,7 @@ NAME			=	fdf
 CC				=	gcc
 RM				=	rm -f
 
-CFLAGS			=	-g -Wall -Wextra -Werror
+CFLAGS			=	-g3 -Wall -Wextra -Werror
 MLX_LINUX_FLAGS	=	-L. -lXext -L. -lX11 -lm -lbsd
 
 .c.o:		
