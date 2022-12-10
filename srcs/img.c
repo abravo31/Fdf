@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 17:11:12 by abravo            #+#    #+#             */
-/*   Updated: 2022/12/06 20:18:20 by abravo           ###   ########.fr       */
+/*   Updated: 2022/12/10 23:51:55 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	zoom(t_data *data, int x, int y)
 {
-//	printf("x: %f\n", pt->x);
 	data->matrix[y][x].x *= data->scale;
-//	printf("y: %f scale: %f\n", pt->x, data->scale);
 	data->matrix[y][x].y *= data->scale;
 	data->matrix[y][x].z *= data->z_scale;
 }

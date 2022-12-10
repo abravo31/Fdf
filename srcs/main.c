@@ -6,11 +6,17 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:41:25 by abravo            #+#    #+#             */
-/*   Updated: 2022/12/06 23:15:22 by abravo           ###   ########.fr       */
+/*   Updated: 2022/12/10 23:52:06 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	ft_error(t_data *data)
+{
+	write(1, "Malloc failed.\n", 16);
+	ft_exit(data);
+}
 
 int	ft_exit(t_data *data)
 {
@@ -42,7 +48,9 @@ void	set_data(t_data *data)
 			&data->endian);
 	data->mlx_win = mlx_new_window(data->mlx, data->win_x, data->win_y, "FDF");
 	data->scale = data->win_x / data->size_x * 0.4;
-	data->z_scale = 0.2;
+	data->z_scale = 1;
+	data->matrix = NULL;
+	
 }
 
 int	main(int ac, char **av)
@@ -53,14 +61,13 @@ int	main(int ac, char **av)
 		return (1);
 	count_lines(av[1], &data);
 	set_data(&data);
-	data.matrix = fill_matrix(av[1], &data);
-	if (data.matrix == NULL)
-		printf("A malloc has failed\n");
+	fill_matrix(av[1], &data);
 	max_z(&data);
 	min_z(&data);
+	ft_zscale(&data);
 	draw_map(&data);
-	mlx_hook(data.mlx_win, 17, 0, ft_exit, &data);
 	mlx_key_hook(data.mlx_win, key_hook, &data);
+	mlx_hook(data.mlx_win, 17, 0, ft_exit, &data);
 	mlx_loop(data.mlx);
 	return (0);
 }

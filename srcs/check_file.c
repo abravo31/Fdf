@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 20:20:05 by abravo            #+#    #+#             */
-/*   Updated: 2022/11/26 16:02:46 by abravo           ###   ########.fr       */
+/*   Updated: 2022/12/10 19:03:46 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,15 @@ int	check_file(const char *filename)
 	int	file;
 
 	if (check_file_name(filename))
-		return (printf("File format is wrong.\n"), 1);
+	{	
+		write(1, "File format is wrong.\n", 23);
+		exit(0);
+	}
 	file = open(filename, O_RDONLY);
 	if (file == -1)
-		return (printf("Problem with file.\n"), 1);
+	{
+		write(1, "Problem with file.\n", 20);
+		exit(0);
+	}
 	return (0);
 }

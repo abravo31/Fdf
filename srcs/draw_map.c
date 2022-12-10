@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 22:29:00 by abravo            #+#    #+#             */
-/*   Updated: 2022/12/06 22:55:05 by abravo           ###   ########.fr       */
+/*   Updated: 2022/12/10 23:51:06 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	draw_map(t_data *data)
 	data->addr = mlx_get_data_addr(data->img,
 			&(data->bpp), &(data->line_length), &(data->endian));
 	set_img(data);
+	
 	while (y < data->size_y)
 	{
 		x = 0;
@@ -87,10 +88,10 @@ void	draw_map(t_data *data)
 		{
 			if (x + 1 != data->size_x)
 				if (!draw_line(data, data->matrix[y][x], data->matrix[y][x + 1]))
-					exit(1);
-				// si NULL, tout free et tout exit
+					ft_error(data);
 			if (y + 1 != data->size_y)
-				draw_line(data, data->matrix[y][x], data->matrix[y + 1][x]);
+				if (!draw_line(data, data->matrix[y][x], data->matrix[y + 1][x]))
+					ft_error(data);
 			x++;
 		}
 		y++;

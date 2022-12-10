@@ -6,27 +6,13 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 18:09:54 by abravo            #+#    #+#             */
-/*   Updated: 2022/12/06 23:12:03 by abravo           ###   ########.fr       */
+/*   Updated: 2022/12/10 23:55:02 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./fdf.h"
 
-void	ft_free_tab(void **tab)
-{
-	int	i;
-
-	i = 0;
-	if (tab == NULL)
-		return ;
-	if (*tab == NULL)
-		return ;
-	while(tab && tab[i])
-		free(tab[i++]);
-	free(tab);
-}
-
-int	count_bytes(char *line)
+void	count_bytes(char *line, t_data *data)
 {
 	int		bytes;
 	int		i;
@@ -34,16 +20,16 @@ int	count_bytes(char *line)
 
 	bytes = 0;
 	i = 0;
-	while(line[i] != '\n')
+	while (line[i] != '\n')
 		i++;
 	line[i] = '\0';
 	line_nb = ft_split(line, ' ');
 	if (!line_nb)
-		return (0);
+		exit(1);
 	while (line_nb[bytes])
 		bytes++;
 	ft_free_tab((void **)line_nb);
-	return (bytes);
+	data->size_x = bytes;
 }
 
 void	count_lines(const char *map, t_data *data)
@@ -54,15 +40,15 @@ void	count_lines(const char *map, t_data *data)
 
 	lines = 0;
 	fd = open(map, O_RDONLY);
-	
+	if (fd == -1)
+		exit(1);
 	line = get_next_line(fd);
-	data->size_x = count_bytes(line);
-	// data->size_x = 0;
-	if (data->size_x == 0)
+	if (!line || line[0] == '\n')
 	{
-		free (line);
-		printf("We see\n");
+		write(1, "Problem with file.\n", 20);
+		exit(1);
 	}
+	count_bytes(line, data);
 	while (line)
 	{
 		lines++;
@@ -74,7 +60,7 @@ void	count_lines(const char *map, t_data *data)
 	free(line);
 }
 
-void	fill_matrix_line(t_pts **matrix, char **tab, int y, int size)
+void	fill_matrix_line(t_pts **matrix, char **tab, int y, double size)
 {
 	int	x;
 
@@ -88,56 +74,55 @@ void	fill_matrix_line(t_pts **matrix, char **tab, int y, int size)
 	}
 }
 
-t_pts	**fill_line(const char *map, int size, t_pts **matrix, int y)
+t_pts	**fill_line(const char *map, t_data *data, int y)
 {
 	char	*line;
 	char	**tab;
 	int		fd;
 
 	fd = open(map, O_RDONLY);
+	if (fd == -1)
+		return (NULL);
 	line = get_next_line(fd);
-
+	if (!line)
+		return (NULL);
 	while (line)
 	{
 		tab = ft_split(line, ' ');
 		if (!tab)
 		{
-			printf("La doit tout free et sortir proprement\n");
 			free(line);
-			ft_free_tab((void **)matrix);
-			return (NULL);
+			ft_error(data);
 		}
 		free(line);
-		fill_matrix_line(matrix, tab, y, size);		
+		fill_matrix_line(data->matrix, tab, y, data->size_x);		
 		line = get_next_line(fd);
 		ft_free_tab((void **)tab);
 		y++;
 	}
 	close(fd);
-	matrix[y] = NULL;
-	return (matrix);
+	data->matrix[y] = NULL;
+	return (data->matrix);
 }
 
 t_pts	**fill_matrix(const char *map, t_data *data)
 {
-	t_pts	**matrix;
 	int		i;
 	
 	i = 0;
-	matrix = (t_pts **)malloc(sizeof(t_pts *) * (data->size_y + 1));
-	if (!matrix)
-	{
-		//exit and free all
-		return (NULL);
-	}
+	
+	data->matrix = (t_pts **)malloc(sizeof(t_pts *) * (data->size_y + 1));
+	if (!data->matrix)
+		ft_error(data);
 	while (i < data->size_y)
-		matrix[i++] = (t_pts *)malloc(sizeof(t_pts) * data->size_x);
-		//proteger et free, sortir propement
-	matrix = fill_line(map, data->size_x, matrix, 0);
-	if (!matrix)
 	{
-		printf("Comment tu vas sortir\n");
-		return (NULL);
-	}
-	return (matrix);
+		data->matrix[i] = (t_pts *)malloc(sizeof(t_pts) * data->size_x);
+		if(!data->matrix[i])
+			ft_error(data);
+		i++;
+	}	
+	fill_line(map, data, 0);
+	if (!data->matrix)
+		ft_error(data);
+	return (data->matrix);
 }

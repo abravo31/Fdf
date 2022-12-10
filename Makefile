@@ -22,7 +22,7 @@ NAME			=	fdf
 CC				=	gcc
 RM				=	rm -f
 
-CFLAGS			=	-g3 -Wall -Wextra -Werror
+CFLAGS			=	-g3 -Wall -Wextra -Werror #-fsanitize=address
 MLX_LINUX_FLAGS	=	-L. -lXext -L. -lX11 -lm -lbsd
 
 .c.o:		
