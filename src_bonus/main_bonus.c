@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:41:25 by abravo            #+#    #+#             */
-/*   Updated: 2022/12/11 22:19:15 by abravo           ###   ########.fr       */
+/*   Updated: 2022/12/11 21:24:09 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,22 @@ void	set_data(t_data *data)
 
 int	key_hook(int key, t_data *data)
 {
+	if (key == 65451)
+		data->scale += 5;
+	if (key == 65453)
+		data->scale -= 5;
+	if (key == 65362)
+		data->move_y -= 5;
+	if (key == 65364)
+		data->move_y += 5;
+	if (key == 65363)
+		data->move_x += 5;
+	if (key == 65361)
+		data->move_x -= 5;
 	if (key == 65307)
 		ft_exit(data);
+	ft_reset(data);
+	draw_map(data, 0, 0);
 	return (0);
 }
 

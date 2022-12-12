@@ -6,152 +6,93 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 14:45:26 by abravo            #+#    #+#             */
-/*   Updated: 2022/12/09 22:39:29 by abravo           ###   ########.fr       */
+/*   Updated: 2022/12/11 21:16:03 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_store(char *store)
+char	*ft_new_buf(char *buf, int new_size)
 {
 	int		i;
-	int		j;
-	char	*new_store;
+	int		len_nl;
 
 	i = 0;
-	while (store[i] && store[i] != '\n')
-		i++;
-	if (!store[i])
+	len_nl = ft_strlen(&buf[new_size]);
+	if (len_nl)
+		ft_memcpy(buf, &buf[new_size], len_nl);
+	while ((i + len_nl) < BUFFER_SIZE && buf[i + len_nl])
 	{
-		free(store);
-		return (NULL);
+		buf[i + len_nl] = '\0';
+		i++;
 	}
-	new_store = (char *)malloc(sizeof(char) * (ft_strlen(store) - i + 1));
-	if (!new_store)
-		return (NULL);
-	i += 1;
-	j = 0;
-	while (store[i])
-		new_store[j++] = store[i++];
-	new_store[j] = '\0';
-	if (store)
-		free(store);
-	return (new_store);
+	return (buf);
 }
 
-char	*ft_get_line(char *store)
+char	*ft_get_line(char *buf, char *line_read)
 {
 	int		i;
-	char	*line;
+	int		line_len;
+	char	*store;
 
+	line_len = ft_strlen(line_read);
 	i = 0;
-	if (!store[i])
+	while (buf[i] && buf[i] != '\n')
+		i++;
+	if (buf[i] == '\n')
+		i++;
+	store = (char *)malloc(sizeof(char) * (line_len + i + 1));
+	if (!store)
 		return (NULL);
-	while (store[i] && store[i] != '\n')
-		i++;
-	if (store[i] == '\n')
-		i++;
-	line = (char *)malloc(sizeof(char) * (i + 1));
-	if (!line)
-		return (NULL);
-	i = -1;
-	while (store[++i] && store [i] != '\n')
-		line[i] = store[i];
-	if (store[i] == '\n')
-	{
-		line[i] = store[i];
-		i++;
-	}
-	line[i] = '\0';
-	return (line);
-}
-
-char	*ft_read_and_store(int fd, char *store)
-{
-	static char	buf[BUFFER_SIZE + 1];
-	char		*tmp;
-	int			bytes;
-
-	bytes = 1;
-	while (ft_strchr(store, '\n') == NULL && bytes != 0)
-	{
-		bytes = read(fd, buf, BUFFER_SIZE);
-		if (bytes == -1)
-			return (NULL);
-		buf[bytes] = '\0';
-		tmp = store;
-		store = ft_strjoin_gnl(store, buf);
-		free(tmp);
-	}
+	store[line_len + i] = '\0';
+	ft_memcpy(store, line_read, line_len);
+	ft_memcpy(&store[line_len], buf, i);
+	ft_new_buf(buf, i);
+	if (line_read)
+		free(line_read);
+	line_read = NULL;
 	return (store);
+}
+
+int	ft_found_nl(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i])
+	{
+		if (str[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 char	*get_next_line(int fd)
 {
-	int			i;
-	char		*line;
+	int			bytes;
 	char		*store;
 	static char	buf[BUFFER_SIZE + 1];
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0))
 		return (NULL);
-	store = ft_strjoin_gnl(NULL, buf);
-	store = ft_read_and_store(fd, store);
-	if (!store)
-		return (NULL);
-	line = ft_get_line(store);
-	store = ft_store(store);
-	i = 0;
-	while (store && store[i])
+	bytes = 1;
+	store = NULL;
+	while (ft_found_nl(store) == 0 && bytes != 0)
 	{
-		buf[i] = store[i];
-		i++;
+		if (!buf[0])
+		{
+			bytes = read(fd, buf, BUFFER_SIZE);
+			buf[bytes] = '\0';
+		}
+		store = ft_get_line(buf, store);
+		if (!store)
+			break ;
 	}
-	buf[i] = '\0';
-	free (store);
-	return (line);
+	if (!store || !store[0])
+	{
+		free(store);
+		return (NULL);
+	}
+	return (store);
 }
-
-/*int	main()
-{
-	int		fd;
-	char	*line;
-
-	fd = open("test", O_RDONLY);
-	line = get_next_line(fd);
-	printf("-%s", line);
-	free (line);
-	// line = get_next_line(fd);
-	// printf("-%s", line);
-	// free (line);
-	// line = get_next_line(fd);
-	// printf("-%s", line);
-	// free (line);
-	// line = get_next_line(fd);
-	// printf("-%s", line);
-	// free (line);
-	// line = get_next_line(fd);
-	// printf("-%s", line);
-	// free (line);
-	// line = get_next_line(fd);
-	// printf("-%s", line);
-	// free (line);
-	// line = get_next_line(fd);
-	// printf("-%s", line);
-	// free (line);
-	// line = get_next_line(fd);
-	// printf("-%s", line);
-	// free (line);
-	// free (line);
-	// line = get_next_line(fd);
-	// printf("%s", line);
-	//while (line)
-	//{
-	//	printf("%s", line);
-	//	free (line);
-	//	line = get_next_line (fd);
-	//}
-
-	close (fd);
-	return (0);
-}*/

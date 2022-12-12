@@ -6,13 +6,13 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 22:29:00 by abravo            #+#    #+#             */
-/*   Updated: 2022/12/11 22:19:15 by abravo           ###   ########.fr       */
+/*   Updated: 2022/12/11 21:55:59 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	my_mlx_pixel_put(t_data *data, t_pts *cur)
+void	my_mlx_pixel_put(t_data *data, t_pts *cur, t_pts from, t_pts to)
 {
 	int	dst;
 	int	color;
@@ -20,7 +20,7 @@ void	my_mlx_pixel_put(t_data *data, t_pts *cur)
 	if (cur->x >= 0 && cur->x <= 1920 && cur->y >= 0 && cur->y <= 1080)
 	{
 		dst = ((int)cur->y * data->line_len) + ((int)cur->x * (data->bpp / 8));
-		color = 0xFFFFFF;
+		color = step_color(from, to, cur);
 		data->addr[dst] = color;
 		data->addr[++dst] = color >> 8;
 		data->addr[++dst] = color >> 16;
@@ -60,7 +60,7 @@ Bool	draw_line(t_data *data, t_pts from, t_pts to)
 	i = 0;
 	while (++i <= (int)step)
 	{
-		my_mlx_pixel_put(data, cur);
+		my_mlx_pixel_put(data, cur, from, to);
 		cur->x += step_x;
 		cur->y += step_y;
 	}

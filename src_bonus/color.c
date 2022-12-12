@@ -6,12 +6,11 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 22:06:18 by abravo            #+#    #+#             */
-/*   Updated: 2022/12/06 20:18:39 by abravo           ###   ########.fr       */
+/*   Updated: 2022/12/11 21:25:59 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
 
 double	ft_percent(int start, int end, int current)
 {
@@ -20,13 +19,12 @@ double	ft_percent(int start, int end, int current)
 
 	cur_place = current - start;
 	dist = end - start;
-	
 	if (dist == 0)
 		return (1);
 	return (cur_place / dist);
 }
 
-int	default_color(t_data *data, int z)
+int	def_color(t_data *data, int z)
 {
 	double	percent;
 

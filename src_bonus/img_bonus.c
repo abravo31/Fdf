@@ -6,7 +6,7 @@
 /*   By: abravo <abravo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 17:11:12 by abravo            #+#    #+#             */
-/*   Updated: 2022/12/11 22:19:29 by abravo           ###   ########.fr       */
+/*   Updated: 2022/12/11 21:48:09 by abravo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,31 @@ void	set_img(t_data *data)
 		x = -1;
 		while (++x < data->size_x)
 		{
+			data->matrix[y][x].color = def_color(data, data->matrix[y][x].z);
 			zoom(data, x, y);
 			isometric(data, &data->matrix[y][x]);
 			data->matrix[y][x].x += data->mid_x + data->move_x;
 			data->matrix[y][x].y += data->mid_y + data->move_y;
 		}
+	}
+}
+
+void	ft_reset(t_data *data)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < data->size_y)
+	{
+		x = 0;
+		while (x < data->size_x)
+		{
+			data->matrix[y][x].z /= data->z_scale;
+			data->matrix[y][x].x = x;
+			data->matrix[y][x].y = y;
+			x++;
+		}
+		y++;
 	}
 }
